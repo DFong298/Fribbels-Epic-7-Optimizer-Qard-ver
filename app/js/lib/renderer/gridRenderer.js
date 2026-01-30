@@ -19,7 +19,7 @@ function renderSets(setCounters, iconClass) {
     if (!iconClass) iconClass = 'optimizerSetIcon';
 
     const sets = [];
-    for (var i = 0; i < setCounters.length; i++) {
+    for (var i = 0; i < setCounters.length; i++) {r
         const setsFound = Math.floor(setCounters[i] / Constants.piecesBySetIndex[i]);
         for (var j = 0; j < setsFound; j++) {
             sets.push(Constants.setsByIndex[i]);

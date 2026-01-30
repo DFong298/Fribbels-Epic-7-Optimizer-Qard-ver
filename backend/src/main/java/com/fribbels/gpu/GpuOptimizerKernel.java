@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 public class GpuOptimizerKernel extends Kernel {
 
-    @Constant final float[] flattenedWeaponAccs;
+    @Constant final float[] flattenedWeaponAccs;r
     @Constant final float[] flattenedHelmetAccs;
     @Constant final float[] flattenedArmorAccs;
     @Constant final float[] flattenedNecklaceAccs;
@@ -37,6 +37,7 @@ public class GpuOptimizerKernel extends Kernel {
     @Constant final float revengeSetBonus;
     @Constant final float reversalSetBonus;
     @Constant final float penSetDmgBonus;
+    @Constant final float warfareSetBonus;
 
     @Constant final float targetDefense;
 
@@ -220,6 +221,7 @@ public class GpuOptimizerKernel extends Kernel {
             final float revengeSetBonus,
             final float reversalSetBonus,
             final float penSetDmgBonus,
+            final float warfareSetBonus,
             final float targetDefense,
             final float bonusMaxAtk,
             final float bonusMaxDef,
@@ -332,6 +334,7 @@ public class GpuOptimizerKernel extends Kernel {
         this.revengeSetBonus = revengeSetBonus;
         this.reversalSetBonus = reversalSetBonus;
         this.penSetDmgBonus = penSetDmgBonus;
+        this.warfareSetBonus = warfareSetBonus;
 
         this.targetDefense = targetDefense;
 
@@ -731,7 +734,7 @@ public class GpuOptimizerKernel extends Kernel {
 //            final int revengeSet = localSetsBuffer[setJump + 14] / 4;
 
             final float atk =  ((bonusBaseAtk  + wAtk+hAtk+aAtk+nAtk+rAtk+bAtk + (atkSet * atkSetBonus)) * bonusMaxAtk);
-            final float hp =   ((bonusBaseHp   + wHp+hHp+aHp+nHp+rHp+bHp + (hpSet * hpSetBonus + warfareSet * hpSetBonus + torrentSet * hpSetBonus/-2)) * bonusMaxHp);
+            final float hp =   ((bonusBaseHp   + wHp+hHp+aHp+nHp+rHp+bHp + (hpSet * hpSetBonus + warfareSet * warfareSetBonus + torrentSet * hpSetBonus/-2)) * bonusMaxHp);
             final float def =  ((bonusBaseDef  + wDef+hDef+aDef+nDef+rDef+bDef + (defSet * defSetBonus)) * bonusMaxDef);
             final int cr =     (int) (baseCr + wCr+hCr+aCr+nCr+rCr+bCr + (crSet * 12) + bonusCr + aeiCr);
             final int cd =     (int) (baseCd + wCd+hCd+aCd+nCd+rCd+bCd + (cdSet * 60) + bonusCd + aeiCd);
@@ -791,7 +794,7 @@ public class GpuOptimizerKernel extends Kernel {
             final int conversions = (int) (wConv+hConv+aConv+nConv+rConv+bConv);
             final int eq = (int) (wEq+hEq+aEq+nEq+rEq+bEq);
 
-            final float bsHp = (hp - baseHp - artifactHealth - (hpSet * hpSetBonus) - (warfareSet * hpSetBonus) + (torrentSet * hpSetBonus/2)) / baseHp * 100;
+            final float bsHp = (hp - baseHp - artifactHealth - (hpSet * hpSetBonus) - (warfareSet * warfareSetBonus) + (torrentSet * hpSetBonus/2)) / baseHp * 100;
             final float bsAtk = (atk - baseAtk - artifactAttack - (atkSet * atkSetBonus)) / baseAtk * 100;
             final float bsDef = (def - baseDef - artifactDefense - (defSet * defSetBonus)) / baseDef * 100;
             final float bsCr = (cr - baseCr - (crSet * 12));
